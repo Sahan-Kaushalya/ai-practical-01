@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CALCULATOR V2.0</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="min-h-screen flex items-center justify-center overflow-hidden">
+
+  <!-- Background grid -->
+  <div class="grid-bg"></div>
+
+  <!-- Minimal ambient animation -->
+  <div class="ambient-flow" aria-hidden="true"></div>
+
+  <!-- Glow orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="app-shell">
+    <div class="calc-wrapper">
+      <!-- Header badge -->
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        <span class="badge-title font-mono text-xs tracking-[0.3em] uppercase">CALCULATOR-X v2.0</span>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">Light</button>
+      </div>
+
+      <!-- Calculator card -->
+      <div class="calc-card">
+
+      <!-- Display panel -->
+      <div class="display-panel">
+        <!-- History / expression -->
+        <div id="expression" class="expression-line">0</div>
+        <!-- Main result -->
+        <div id="display" class="main-display">0</div>
+        <!-- Mode indicators -->
+        <div class="mode-row">
+          <span id="modeRad" class="mode-tag active">RAD</span>
+          <span id="modeDeg" class="mode-tag">DEG</span>
+          <span id="memIndicator" class="mode-tag hidden">M</span>
+        </div>
+      </div>
+
+      <!-- Button grid -->
+      <div class="btn-grid">
+
+        <!-- Row 1: Functions -->
+        <button class="btn btn-fn" data-action="sin">sin</button>
+        <button class="btn btn-fn" data-action="cos">cos</button>
+        <button class="btn btn-fn" data-action="tan">tan</button>
+        <button class="btn btn-fn" data-action="log">log</button>
+        <button class="btn btn-fn" data-action="ln">ln</button>
+
+        <!-- Row 2: Advanced -->
+        <button class="btn btn-fn" data-action="sqrt">√</button>
+        <button class="btn btn-fn" data-action="square">x²</button>
+        <button class="btn btn-fn" data-action="power">xⁿ</button>
+        <button class="btn btn-fn" data-action="pi">π</button>
+        <button class="btn btn-fn" data-action="e">e</button>
+
+        <!-- Row 3: Memory & Parens -->
+        <button class="btn btn-mem" data-action="MC">MC</button>
+        <button class="btn btn-mem" data-action="MR">MR</button>
+        <button class="btn btn-mem" data-action="MS">M+</button>
+        <button class="btn btn-paren" data-action="(">(</button>
+        <button class="btn btn-paren" data-action=")">)</button>
+
+        <!-- Row 4: Clear / Del / % -->
+        <button class="btn btn-clear col-span-2" data-action="AC">AC</button>
+        <button class="btn btn-del" data-action="del">⌫</button>
+        <button class="btn btn-op" data-action="%">%</button>
+        <button class="btn btn-op btn-op-main" data-action="÷">÷</button>
+
+        <!-- Row 5: 7 8 9 × -->
+        <button class="btn btn-num" data-action="7">7</button>
+        <button class="btn btn-num" data-action="8">8</button>
+        <button class="btn btn-num" data-action="9">9</button>
+        <div class="btn-spacer" aria-hidden="true"></div>
+        <button class="btn btn-op btn-op-main" data-action="×">×</button>
+
+        <!-- Row 6: 4 5 6 - -->
+        <button class="btn btn-num" data-action="4">4</button>
+        <button class="btn btn-num" data-action="5">5</button>
+        <button class="btn btn-num" data-action="6">6</button>
+        <div class="btn-spacer" aria-hidden="true"></div>
+        <button class="btn btn-op btn-op-main" data-action="−">−</button>
+
+        <!-- Row 7: 1 2 3 + -->
+        <button class="btn btn-num" data-action="1">1</button>
+        <button class="btn btn-num" data-action="2">2</button>
+        <button class="btn btn-num" data-action="3">3</button>
+        <div class="btn-spacer" aria-hidden="true"></div>
+        <button class="btn btn-op btn-op-main" data-action="+">+</button>
+
+        <!-- Row 8: +/- 0 . = -->
+        <button class="btn btn-num" data-action="±">±</button>
+        <button class="btn btn-num btn-zero" data-action="0">0</button>
+        <button class="btn btn-num" data-action=".">.</button>
+        <button class="btn btn-eq col-span-2" data-action="=">=</button>
+
+      </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer-line">
+        <span class="footer-tagline">PRECISION · POWER · PERFORMANCE</span>
+        <span class="footer-credit">Developed by SAHAN KAUSHALYA</span>
+      </div>
+    </div>
+
+    <aside id="helpPanel" class="help-panel" aria-label="Calculator interaction guide" aria-hidden="true">
+      <button id="helpPanelToggle" class="help-toggle" type="button" aria-expanded="false" aria-controls="helpPanelBody" aria-label="Close interaction panel">✕</button>
+      <div id="helpPanelBody" class="help-panel-body">
+        <h2 class="help-title">Desktop Interaction</h2>
+        <p class="help-note">Use this panel to quickly see inputs, percent rules, shortcuts, and advanced actions.</p>
+
+        <h3 class="help-subtitle">Quick Inputs</h3>
+        <ul class="help-list">
+          <li>Brackets: ( and ) for grouped calculations</li>
+          <li>Power: use x^n button or ^ key</li>
+          <li>Sign toggle: use ± to convert + / -</li>
+          <li>Constants: p = pi, e = Euler value</li>
+        </ul>
+
+        <h3 class="help-subtitle">% Calculation Inputs</h3>
+        <ul class="help-list">
+          <li>100-20% = 80</li>
+          <li>200+10% = 220</li>
+          <li>50×10% = 5</li>
+          <li>400÷25% = 1600</li>
+        </ul>
+
+        <h3 class="help-subtitle">Function Examples</h3>
+        <ul class="help-list">
+          <li>sin(30) in DEG mode = 0.5</li>
+          <li>ln(e) = 1</li>
+          <li>log(1000) = 3</li>
+          <li>sqrt(81) = 9</li>
+        </ul>
+
+        <h3 class="help-subtitle">Keyboard Shortcuts</h3>
+        <ul class="help-list">
+          <li>Numbers: 0-9</li>
+          <li>Operators: + - * / %</li>
+          <li>Equals: Enter or =</li>
+          <li>Delete last: Backspace</li>
+          <li>Clear all: Delete or Esc</li>
+          <li>Functions: s c t l n r p e</li>
+        </ul>
+
+        <h3 class="help-subtitle">Memory & Mode</h3>
+        <ul class="help-list">
+          <li>MC: clear saved memory</li>
+          <li>MR: recall saved memory value</li>
+          <li>M+: add current result to memory</li>
+          <li>RAD/DEG: switch angle type for trig</li>
+        </ul>
+      </div>
+    </aside>
+
+    <button id="helpFab" class="help-fab" type="button" aria-controls="helpPanel" aria-expanded="false">
+      Desktop Interaction
+    </button>
+  </div>
+
+  <script src="calculator.js"></script>
+</body>
+</html>
